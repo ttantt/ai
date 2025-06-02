@@ -1,44 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
   <title>AI 聊天客服</title>
   <style>
-    body { font-family: sans-serif; text-align: center; background: #f0f0f0; padding: 30px; }
-    #chat { width: 90%; max-width: 500px; margin: auto; background: white; padding: 20px; border-radius: 10px; }
-    #output { margin-top: 20px; text-align: left; background: #eef; padding: 10px; border-radius: 5px; }
+    body { font-family: sans-serif; text-align: center; padding: 40px; }
+    #response { margin-top: 20px; white-space: pre-wrap; }
   </style>
 </head>
 <body>
-  <div id="chat">
-    <h2>欢迎来到 AI 客服</h2>
-    <p>请问你想了解什么？</p >
-    <input type="text" id="question" placeholder="请输入问题">
-    <button onclick="askAI()">发送</button>
-    <div id="output"></div>
-  </div>
+  <h1>欢迎来到 AI 客服</h1>
+  <input id="question" type="text" placeholder="请输入你的问题..." size="50">
+  <button onclick="ask()">发送</button>
+  <div id="response"></div>
 
   <script>
-    async function askAI() {
-      const q = document.getElementById('question').value;
-      const responseBox = document.getElementById('output');
-      responseBox.innerHTML = "AI 正在思考中...";
+    async function ask() {
+      const question = document.getElementById('question').value;
+      const responseDiv = document.getElementById('response');
+      responseDiv.innerText = "思考中...";
 
-      const apiKey = "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"; // 下一步教你去拿！
-      const res = await fetch("https://api.openai.com/v1/chat/completions", {
+      const apiKey = "sk-你的API密钥"; // <== 把这里换成你自己的
+
+      const response = await fetch("https://api.openai.com/v1/chat/completions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": "Bearer " + apiKey
+          "Authorization": `Bearer ${apiKey}`
         },
         body: JSON.stringify({
           model: "gpt-3.5-turbo",
-          messages: [{ role: "user", content: q }]
+          messages: [{ role: "user", content: question }]
         })
       });
 
-      const data = await res.json();
-      responseBox.innerHTML = "<b>AI：</b>" + data.choices[0].message.content;
+      const data = await response.json();
+      responseDiv.innerText = data.choices?.[0]?.message?.content || "出错了";
     }
   </script>
 </body>
