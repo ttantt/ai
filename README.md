@@ -19,7 +19,7 @@
       const responseDiv = document.getElementById('response');
       responseDiv.innerText = "思考中...";
 
-      const apiKey = "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"; //  
+      const apiKey = "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"; //  
 
       const response = await fetch("https://api.openai.com/v1/chat/completions", {
         method: "POST",
