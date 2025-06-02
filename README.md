@@ -24,7 +24,7 @@
       const responseBox = document.getElementById('output');
       responseBox.innerHTML = "AI 正在思考中...";
 
-      const apiKey = "你的API密钥"; // 下一步教你去拿！
+      const apiKey = "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"; // 下一步教你去拿！
       const res = await fetch("https://api.openai.com/v1/chat/completions", {
         method: "POST",
         headers: {
